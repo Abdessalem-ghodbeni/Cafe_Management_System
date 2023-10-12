@@ -1,5 +1,4 @@
 package com.management.cafe_management.servicesmpl;
-
 import com.management.cafe_management.POJO.User;
 import com.management.cafe_management.constens.CafeConstante;
 import com.management.cafe_management.dao.UserDao;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -29,7 +29,7 @@ public class userServices implements UserServices {
 try {
     log.info("inside signup ",requesMap);
     if(validateSignUp(requesMap)){
-        User user=userDao.findByEmailId(requesMap.get("email"));
+        Optional<User> user=userDao.findByEmailId(requesMap.get("email"));
         if(Objects.isNull(user)){
             userDao.save(getUserFromMap(requesMap));
             return CafeUtils.getResponseEntity("Successfully registred",HttpStatus.OK);
